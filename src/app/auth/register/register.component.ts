@@ -27,6 +27,9 @@ export class RegisterComponent implements OnInit {
 
   onSubmit() {
     this.loading=true;
+    setTimeout(() => {
+      this.loading=false;
+      },4000);
     this.authService.createUser(
       this.registerForm.value.username,
       this.registerForm.value.email,

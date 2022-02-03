@@ -4,6 +4,7 @@ import { AuthService } from 'src/app/auth/services/auth.service';
 import { SocialAuthService, GoogleLoginProvider, SocialUser, FacebookLoginProvider } from 'angularx-social-login';
 import { AddUserService } from 'src/app/services/add-user.service';
 import { NgxSpinnerService } from "ngx-spinner";
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -13,6 +14,7 @@ import { NgxSpinnerService } from "ngx-spinner";
 export class LoginComponent implements OnInit {
   socialUser: SocialUser | undefined;
   loading:boolean=false;
+  authStatusSub?: Subscription;
   role?: string;
   loginForm = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
@@ -28,6 +30,15 @@ export class LoginComponent implements OnInit {
   ) { }
   isLoggedin?: boolean;
   ngOnInit(): void {
+
+    this.authStatusSub=this.authSerice.getAuthStatusListener().subscribe(
+      authStatus=>{
+        this.loading=false
+      }
+    )
+
+
+
     this.socialAuthService.authState.subscribe((user) => {
       this.socialUser = user;
     }, err => {
@@ -36,6 +47,7 @@ export class LoginComponent implements OnInit {
   }
   flag: number = 0;
   onSubmit() {
+    this.loading=true;
     this.loading=true;
 
     this.authSerice.login(
@@ -50,7 +62,8 @@ export class LoginComponent implements OnInit {
   loginWithGoogle(): void {
     
     this.loading=true;
-
+    this.loading=true;
+    
     this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID).then((res: any) => {
       this.addUserService.Google(this.socialUser);
     }).catch(err => {
@@ -62,6 +75,7 @@ export class LoginComponent implements OnInit {
   loginWithFacebook(): void {
     
     this.loading=true;
+   
 
     this.socialAuthService.signIn(FacebookLoginProvider.PROVIDER_ID).then(res => {
       this.addUserService.Facebook(res);
