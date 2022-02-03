@@ -1,0 +1,53 @@
+<div class="container">
+  <div class="spinner-border text-primary" role="status" *ngIf="loading">
+    <span class="sr-only"></span>
+  </div>
+  <div class="row">
+    <div class="col-md-6 m-auto border p-4 bg-light">
+      <h1>Register </h1>
+      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label for="">Username</label>
+          <input type="text" placeholder="Enter Name" formControlName="username" class="form-control" required>
+          <div *ngIf="username?.invalid && (username?.dirty || username?.touched)" >
+
+            <small class="text-danger" *ngIf="username?.errors?.['required']">
+              Username is required.
+            </small>
+            <small class="text-danger" *ngIf="username?.errors?.['minlength']">
+              Name must be at least 4 characters long.
+            </small>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="">E-mail</label>
+          <input type="email" placeholder="Enter E-mail" formControlName="email" class="form-control" required>
+          <div *ngIf="(email?.invalid && email?.touched) || email?.dirty">
+            <small class="text-danger" *ngIf="email?.errors?.['required']">Email address is required</small>
+            <small class="text-danger" *ngIf="email?.errors?.['email']">Email address is invalid</small>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="">Password</label>
+          <input type="password" class="form-control" formControlName="password" placeholder="***********">
+          <div *ngIf="(password?.invalid && password?.touched) || password?.dirty">
+            <small class="text-danger" *ngIf="password?.errors?.['required']">Password is required</small>
+            <small class="text-danger" *ngIf="password?.errors?.['minlength']">password Must length must be 5 digit</small>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="">Cpassword</label>
+          <input type="password" class="form-control" formControlName="cpassword" placeholder="***********">
+          <div *ngIf="(cpassword?.invalid && cpassword?.touched) || cpassword?.dirty">
+            <small class="text-danger" *ngIf="cpassword?.errors?.['required']">Cpassword is required</small>
+            <small class="text-danger" *ngIf="cpassword?.errors?.['minlength']">Cpassword Must length must be 5 digit</small>
+          </div>
+        </div>
+        <div class="text-center mt-3">
+          <button type="submit" [disabled]="!registerForm.valid" class="btn btn-primary">Submit</button>
+          <button type="reset" class="btn btn-dark ms-md-5">Reset</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
