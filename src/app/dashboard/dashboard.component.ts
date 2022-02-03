@@ -82,7 +82,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
 
   onSubmit() {
-    this.spinner.show();
 
     if (this.registerForm.invalid) { return };
     if (this.mode === "insert") {
