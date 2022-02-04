@@ -22,7 +22,7 @@ export class SuccessInterceptor implements HttpInterceptor {
         if (evt instanceof HttpResponse ) {
           if(evt.status===201){
             successMessage=evt.body;
-            this.toasterService.success(successMessage.message)
+            this.toasterService.info(successMessage.message)
           }
         }
       }));

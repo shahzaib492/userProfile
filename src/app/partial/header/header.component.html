@@ -1,6 +1,7 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
   <div class="container-fluid">
-    <a class="navbar-brand" href="#">UserProfile</a>
+    <a class="navbar-brand " href="#">
+      <span class="fas fa-male"></span> <span class="ms-2">Profile-Maker</span> </a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
       aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -12,12 +13,13 @@
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
             aria-expanded="false">
             Admin
+            
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown" >
             <!-- <li><a class="dropdown-item" *ngIf="!userIsAuthenticated" routerLink="auth/singup">Singup</a></li> -->
             <li><a class="dropdown-item" *ngIf="!userIsAuthenticated" routerLink="auth/login">Login</a></li>
-            <li><a class="dropdown-item" *ngIf="userIsAuthenticated " routerLink="">AddUser</a></li>
-            <li><a class="dropdown-item" *ngIf="userIsAuthenticated " routerLink="showUser">All User</a></li>
+            <li><a class="dropdown-item" *ngIf="userIsAuthenticated && role=='admin'" routerLink="">AddUser</a></li>
+            <li><a class="dropdown-item" *ngIf="userIsAuthenticated && role=='admin'" routerLink="showUser">All User</a></li>
           </ul>
         </li>
         <li class="nav-item dropdown" *ngIf="!userIsAuthenticated">

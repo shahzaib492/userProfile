@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 import { AuthData } from 'src/app/interface/admin.interface';
 import { AuthDataUser } from 'src/app/interface/user.interfae';
 import { ToasterService } from 'src/app/services/toaster.service';
@@ -28,8 +28,9 @@ export class AuthService {
   public authStatusListner = new Subject<boolean>();
   public isAuthenticated = false;
   public role: any;
+  public roleSubject?: BehaviorSubject<string> = new BehaviorSubject("user");
   public userName = new Subject<string>();
-  public name?:any;
+  public name?: any;
   isTimer: any;
   public userId?: any;
   getToken() {
@@ -50,9 +51,11 @@ export class AuthService {
     return this.role;
   }
 
-  getUsername(){
+  getUsername() {
     return this.userName.asObservable();
   }
+
+
 
   createUser(username: string, email: string, password: string, cpassword: string) {
     const authData: AuthData = {
@@ -122,6 +125,7 @@ export class AuthService {
             this.userId = response.userid;
             this.authStatusListner.next(true);
             this.role = response.role;
+            this.roleSubject?.next(this.role);
             this.name = response.name;
             this.userName.next(response.name)
             const now = new Date();
@@ -166,6 +170,7 @@ export class AuthService {
       this.isAuthenticated = true;
       this.userId = authInformation.userId;
       this.role = authInformation.role;
+      this.roleSubject?.next(this.role);
       this.setAuthTimer(expiresIn / 1000);
       this.authStatusListner.next(true);
     }
@@ -176,7 +181,7 @@ export class AuthService {
     this.isAuthenticated = false;
     this.authStatusListner.next(false);
     this.userId = null;
-    this.name=null;
+    this.name = null;
     this.clearAuthData();
     clearTimeout(this.isTimer);
     this.toasterService.success("Thankyou")
@@ -189,7 +194,7 @@ export class AuthService {
     this.isAuthenticated = false;
     this.authStatusListner.next(false);
     this.userId = null;
-    this.name=null;
+    this.name = null;
     this.clearAuthData();
     clearTimeout(this.isTimer);
     this.toasterService.success("Thankyou")
@@ -236,7 +241,7 @@ export class AuthService {
       expiresDate: new Date(expiresDate || ''),
       userId: userId,
       role: role,
-      name:name
+      name: name
     };
   }
 

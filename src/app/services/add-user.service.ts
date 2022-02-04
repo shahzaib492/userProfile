@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ActivatedRoute, Route, Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
-import { AuthService } from '../auth/services/auth.service';
+import { AuthService } from './auth.service';
 import { AuthDataUser } from '../interface/user.interfae';
 import { ToasterService } from './toaster.service';
 

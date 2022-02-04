@@ -9,7 +9,7 @@ export class ToasterService {
   constructor(private toastr: ToastrService) { }
 
   success(message: string) {
-    this.toastr.success(message, 'Toastr fun!');
+    this.toastr.success(message,'');
   }
 
   error(message: string) {

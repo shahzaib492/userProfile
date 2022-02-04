@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { AuthService } from '../auth/services/auth.service';
+import { AuthService } from '../services/auth.service';
 import { AuthDataUser } from '../interface/user.interfae';
 import { AddUserService } from '../services/add-user.service';
 import { NgxSpinnerService } from "ngx-spinner";

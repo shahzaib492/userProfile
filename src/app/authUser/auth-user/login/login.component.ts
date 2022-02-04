@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { AuthService } from 'src/app/auth/services/auth.service';
+import { AuthService } from 'src/app/services/auth.service';
 import { SocialAuthService, GoogleLoginProvider, SocialUser, FacebookLoginProvider } from 'angularx-social-login';
 import { AddUserService } from 'src/app/services/add-user.service';
 import { NgxSpinnerService } from "ngx-spinner";
 import { Subscription } from 'rxjs';
+import { GoogleService } from 'src/app/services/google.service';
 
 @Component({
   selector: 'app-login',
@@ -13,7 +14,7 @@ import { Subscription } from 'rxjs';
 })
 export class LoginComponent implements OnInit {
   socialUser: SocialUser | undefined;
-  loading:boolean=false;
+  loading: boolean = false;
   authStatusSub?: Subscription;
   role?: string;
   loginForm = new FormGroup({
@@ -25,20 +26,19 @@ export class LoginComponent implements OnInit {
   constructor(private authSerice: AuthService,
     private socialAuthService: SocialAuthService,
     private addUserService: AddUserService,
-    private spinner: NgxSpinnerService
-  
+    private spinner: NgxSpinnerService,
+    private googleService: GoogleService
+
   ) { }
   isLoggedin?: boolean;
   ngOnInit(): void {
 
-    this.authStatusSub=this.authSerice.getAuthStatusListener().subscribe(
-      authStatus=>{
-        this.loading=false
+    this.authStatusSub = this.authSerice.getAuthStatusListener().subscribe(
+      authStatus => {
+        this.loading = false
       }
     )
-
-
-
+    
     this.socialAuthService.authState.subscribe((user) => {
       this.socialUser = user;
     }, err => {
@@ -47,8 +47,8 @@ export class LoginComponent implements OnInit {
   }
   flag: number = 0;
   onSubmit() {
-    this.loading=true;
-    this.loading=true;
+    this.loading = true;
+    this.loading = true;
 
     this.authSerice.login(
       this.loginForm.value.email,
@@ -60,29 +60,24 @@ export class LoginComponent implements OnInit {
   }
 
   loginWithGoogle(): void {
-    
-    this.loading=true;
-    this.loading=true;
-    
+
+    this.loading = true;
+
     this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID).then((res: any) => {
       this.addUserService.Google(this.socialUser);
-    }).catch(err => {
-      console.log(err);
-    });
+    }).catch((error: any) => {
+      this.loading = false
+    })
   }
+
 
 
   loginWithFacebook(): void {
-    
-    this.loading=true;
-   
-
+    this.loading = true;
     this.socialAuthService.signIn(FacebookLoginProvider.PROVIDER_ID).then(res => {
       this.addUserService.Facebook(res);
+    }).catch((error: any) => {
+      this.loading = false
     });
   }
-
-
-
-
 }

@@ -16,8 +16,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxSpinnerModule } from "ngx-spinner";
 
 import { ToastrModule } from 'ngx-toastr';
-import { ErrorInterceptor } from './error.interceptor';
-import { SuccessInterceptor } from './success.interceptor';
+import { ErrorInterceptor } from './interceptors/error.interceptor';
+import { SuccessInterceptor } from './interceptors/success.interceptor';
 import { provideFirebaseApp, getApp, initializeApp } from '@angular/fire/app';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 
@@ -41,7 +41,11 @@ import { environment } from 'src/environments/environment';
     ReactiveFormsModule,
     DataTablesModule,
     BrowserAnimationsModule,
-    ToastrModule.forRoot(),
+    ToastrModule.forRoot({
+      timeOut: 1000,
+      positionClass: 'toast-bottom-right',
+      preventDuplicates: true,
+    }),
     SocialLoginModule,
     NgxSpinnerModule,
     provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
@@ -49,7 +53,7 @@ import { environment } from 'src/environments/environment';
 
 
   ],
-  exports:[
+  exports: [
     NgxSpinnerModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

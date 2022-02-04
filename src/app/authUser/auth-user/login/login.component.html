@@ -1,19 +1,19 @@
-
-
 <div class="container">
   <div class="spinner-border text-primary" role="status" *ngIf="loading">
     <span class="sr-only"></span>
   </div>
-  <div class="row">
-    <div class="col-md-6 m-auto border p-4 bg-light">
-      
+  <div class="row" style="margin-top: 100px;">
+    <div class="col-md-6 m-auto border shadow order-md-2 p-4 bg-white">
+
       <h1>Login </h1>
-      
+
       <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
 
         <div class="form-group">
           <label for="">E-mail</label>
-          <input type="text" class="form-control" formControlName="email" placeholder="Enter E-mail" required>
+          <input type="text"
+            class="form-control border-top-0  border-start-0 border-end-0 bg-white border-primary border-3 rounded-0"
+            formControlName="email" placeholder="Enter E-mail" required>
           <div *ngIf="(email?.invalid && email?.touched) || email?.dirty">
             <small class="text-danger" *ngIf="email?.errors?.['required']">Email address is required</small>
             <small class="text-danger" *ngIf="email?.errors?.['email']">Email address is invalid</small>
@@ -21,28 +21,33 @@
         </div>
         <div class="form-group">
           <label for="">Password</label>
-          <input type="password" class="form-control" formControlName="password" placeholder="**********" required>
+          <input type="password"
+            class="form-control border-top-0  border-start-0 border-end-0 bg-white border-primary border-3 rounded-0"
+            formControlName="password" placeholder="**********" required>
           <div *ngIf="(password?.invalid && password?.touched) || password?.dirty">
             <small class="text-danger" *ngIf="password?.errors?.['required']">Password is required</small>
             <small class="text-danger" *ngIf="password?.errors?.['minlength']">password Must length must be 5
               digit</small>
           </div>
         </div>
-        
+
         <div class="text-center mt-3">
-          
-        
-          <button type="submit" [disabled]="!loginForm.valid" class="btn btn-primary">Submit</button>
-          <button type="reset" class="btn btn-dark ms-5">Reset</button>
+          <button type="submit" [disabled]="!loginForm.valid" class="btn btn-outline-primary rounded-0 ">Submit</button>
+          <button type="reset" class="btn btn-outline-dark rounded-0 ms-5">Reset</button>
         </div>
       </form>
     </div>
-    <div class="col-md-6 text-center m-auto  " >
-        <div class="p-5 border">
-            <button class="btn btn-warning text-white mx-auto d-block" (click)="loginWithGoogle()"  >Singin With Google</button>
-            <button class="btn btn-primary text-white mt-3 mx-auto d-block" (click)="loginWithFacebook()"  >Singin With Facebook</button>
-        </div>
-       
+    <div class="col-md-5 text-center m-auto  order-md-1">
+      <div class="p-5 ">
+        <button class="btn btn-danger  btn-lg text-white mx-auto d-block col-md-12 " (click)="loginWithGoogle()">
+          <i class="fab fa-google "></i>
+          Login with Google+</button>
+        <button class="btn btn-primary btn-lg  text-white mt-3 mx-auto d-block col-md-12"
+          (click)="loginWithFacebook()">
+          <i class="fab fa-facebook"></i>
+          Login with Facebook</button>
+      </div>
+
     </div>
   </div>
 </div>
